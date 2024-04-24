@@ -110,7 +110,11 @@ class AuthServiceUserRegister {
 
         print("Log In Successful!");
 
-        Get.to(() => Phone(userModel: newUser, firebaseUser: userCredential.user!, targetUser: newUser));
+        Get.to(() => Phone(
+          // userModel: newUser, 
+          // firebaseUser: userCredential.user!, 
+          // targetUser: newUser
+        ));
       }
     } catch (error) {
       print("Error signing in with Google: $error");

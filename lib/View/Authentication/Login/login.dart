@@ -1,17 +1,24 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:taxiassist/Model/User_Model/usermodel.dart';
+import 'package:taxiassist/Resources/Widgets/loginwidget.dart';
 import 'package:taxiassist/Utils/app_color/app_colors.dart';
 import 'package:taxiassist/Utils/button/round_button.dart';
 import 'package:taxiassist/View/Authentication/GoogleAuth/auth_service.dart';
+import 'package:taxiassist/View/Authentication/Register/otp.dart';
+import 'package:taxiassist/View/Authentication/Register/phone.dart';
 import 'package:taxiassist/View/Authentication/Register/register.dart';
-
 
 class  Login_Page extends StatefulWidget {
   
+  // final UserModel userModel;
+  // final User firebaseUser;
+  // final UserModel targetUser;
   
   const  Login_Page({super.key,  });
 
@@ -24,6 +31,11 @@ FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 
 class _Login_PageState extends State<Login_Page> {
+
+  final countryPicker = const FlCountryCodePicker();
+
+  CountryCode countryCode = CountryCode(name: 'pakistan', code: 'PK', dialCode: '+92');
+
 
 
   @override
@@ -91,8 +103,6 @@ class _Login_PageState extends State<Login_Page> {
                 child: Text("Don't have an account? Register Now",
                 style: TextStyle(color: AppColors.whiteColor, fontSize: 14),),
               ),
-
-                
 
               ],
             ),

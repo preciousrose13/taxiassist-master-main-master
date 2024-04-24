@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,16 +11,21 @@ import 'package:taxiassist/View/Authentication/Register/phone.dart';
 import 'package:taxiassist/View/Home_screen/Home_page.dart';
 
 class MyVerify extends StatefulWidget {
-  final UserModel userModel;
-  final User firebaseUser;
-  final UserModel targetUser;
-  const MyVerify({Key? key, required this.userModel, required this.firebaseUser, required this.targetUser}) : super(key: key);
+  // final UserModel userModel;
+  // final User firebaseUser;
+  // final UserModel targetUser;
+  // const MyVerify({Key? key, required this.userModel, required this.firebaseUser, required this.targetUser}) : super(key: key);
+
+  const MyVerify({Key? key}) : super(key: key);
 
   @override
   State<MyVerify> createState() => _MyVerifyState();
 }
 
 class _MyVerifyState extends State<MyVerify> {
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -44,6 +51,7 @@ class _MyVerifyState extends State<MyVerify> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
+    var code = "";
 
     return Scaffold(
       backgroundColor: AppColors.blackColor,
@@ -92,9 +100,11 @@ class _MyVerifyState extends State<MyVerify> {
               ),
               Pinput(
                 length: 6,
-
                 showCursor: true,
-                onCompleted: (pin) => print(pin),
+                onChanged: (value) {
+                  code = value;
+                },
+                // onCompleted: (pin) => print(pin),
               ),
               SizedBox(
                 height: 20,
@@ -103,7 +113,13 @@ class _MyVerifyState extends State<MyVerify> {
                 width: double.infinity,
                 height: 45,
                 child: MyButton(
-                  ontap: () {
+                  ontap: () async{
+                    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+                      verificationId: Phone.verify, 
+                      smsCode: code
+                      );
+
+                    await auth.signInWithCredential(credential);
                     Get.to(() => Home_Page());
                   }, 
                   text: "Verify Phone Number",
@@ -115,9 +131,9 @@ class _MyVerifyState extends State<MyVerify> {
                   TextButton(
                       onPressed: () {
                         Get.to(() => Phone(
-                          userModel: widget.userModel, 
-                          firebaseUser: widget.firebaseUser, 
-                          targetUser: widget.targetUser,
+                          // userModel: widget.userModel, 
+                          // firebaseUser: widget.firebaseUser, 
+                          // targetUser: widget.targetUser,
                         ));
                       },
                       child: Text(
